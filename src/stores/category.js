@@ -14,7 +14,6 @@ export const useCategoryStore = defineStore('category', () => {
         if (res.code === '1') {
             categoryList.value = res.result
         }
-        console.log(categoryList.value)
     }
 
     // 将属性和方法交出去
