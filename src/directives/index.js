@@ -18,7 +18,7 @@ export const lazyPlugin = {
             const targetIsVisible = ref(false)
 
             // 第一个元素即为监听的元素
-            useIntersectionObserver(el, ([{ isIntersecting }]) => {
+          const {stop} =  useIntersectionObserver(el, ([{ isIntersecting }]) => {
             
                 // 这里即为实时进行执行的区域
                 targetIsVisible.value = isIntersecting
@@ -27,6 +27,8 @@ export const lazyPlugin = {
                 if (targetIsVisible.value) {
                     // 发请求获取图片数据 (给img元素赋予地址，则自动获取图片资源)
                     el.src = binding.value
+                    // 停止监听，已经加载好了（图片已展示）没必要继续监听下去了
+                    stop()
                 }
             },)
 
