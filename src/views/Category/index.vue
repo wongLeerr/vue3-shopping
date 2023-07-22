@@ -1,28 +1,10 @@
 <script setup>
-import { ref, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
-import { getCategoryListAPI } from '@/apis/modules/category'
-import { getBannerListAPI } from '@/apis/modules/home'
 import GoodItem from '../Home/components/GoodItem.vue'
+import { useBanner } from './composables/useBanner'
+import { useCategory } from './composables/useCategory'
 
-const { params: { id } } = useRoute()
-
-const bannerList = ref([])
-const categoryInfo = ref({})
-
-const getCategoryList = async () => {
-    const res = await getCategoryListAPI(id)
-    categoryInfo.value = res?.result
-    console.log(res)
-}
-
-onMounted(async () => {
-    getCategoryList()
-    const { result } = await getBannerListAPI({ distributionSite: '2' })
-    bannerList.value = result
-})
-
-
+const { bannerList, loading } = useBanner()
+const { categoryInfo } = useCategory()
 
 </script>
 
@@ -36,7 +18,7 @@ onMounted(async () => {
                     <el-breadcrumb-item>{{ categoryInfo.name }}</el-breadcrumb-item>
                 </el-breadcrumb>
             </div>
-            <div class="home-banner">
+            <div class="home-banner" v-loading="loading">
                 <el-carousel height="500px">
                     <el-carousel-item v-for="item in bannerList" :key="item.id">
                         <img :src="item.imgUrl" alt="bannerImg">

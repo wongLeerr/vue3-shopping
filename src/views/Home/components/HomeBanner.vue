@@ -2,6 +2,7 @@
 import { onMounted, ref } from 'vue'
 import { getBannerListAPI } from '../../../apis/modules/home'
 
+const loading = ref(true)
 const bannerList = ref([])
 
 const getBannerList = async () => {
@@ -9,6 +10,7 @@ const getBannerList = async () => {
   if (res.code === '1') {
     bannerList.value = res.result
   }
+  loading.value = false
 }
 
 onMounted(() => {
@@ -21,7 +23,7 @@ onMounted(() => {
 
 
 <template>
-  <div class="home-banner">
+  <div class="home-banner" v-loading="loading">
     <el-carousel height="500px">
       <el-carousel-item v-for="item in bannerList" :key="item.id">
         <img :src="item.imgUrl" alt="bannerImg">
