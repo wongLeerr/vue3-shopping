@@ -6,13 +6,12 @@ import { ref, onMounted } from 'vue'
 const hotList = ref([])
 
 const getHotList = async () => {
-    const res = await getHotAPI()
-    console.log(res)
-    hotList.value = res.result.slice(0,4)
+  const res = await getHotAPI()
+  hotList.value = res.result.slice(0, 4)
 }
 
 onMounted(() => {
-    getHotList()
+  getHotList()
 })
 
 
@@ -20,15 +19,15 @@ onMounted(() => {
 
 <template>
   <HomePanel title="人气推荐" sub-title="人气爆款 不容错过">
-      <ul class="goods-list">
-        <li v-for="item in hotList" :key="item.id">
-          <RouterLink to="/">
-            <img v-img-lazy="item.picture" alt="hotImg">
-            <p class="name">{{ item.title }}</p>
-            <p class="desc">{{ item.alt }}</p>
-          </RouterLink>
-        </li>
-      </ul>
+    <ul class="goods-list">
+      <li v-for="item in hotList" :key="item.id">
+        <RouterLink to="/">
+          <img v-img-lazy="item.picture" alt="hotImg">
+          <p class="name">{{ item.title }}</p>
+          <p class="desc">{{ item.alt }}</p>
+        </RouterLink>
+      </li>
+    </ul>
   </HomePanel>
 </template>
 

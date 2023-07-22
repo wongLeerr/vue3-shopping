@@ -1,11 +1,16 @@
 import request from "../http";
 
 // 获取首页轮播图列表
-export const getBannerListAPI = () => {
+export const getBannerListAPI = (params = {}) => {
 
+    const { distributionSite = '1' } = params
+    
     return request({
         url: '/home/banner',
-        method:'get'
+        method: 'get',
+        params: {
+            distributionSite
+        }
     })
 
 } 
@@ -25,6 +30,16 @@ export const getHotAPI = () => {
 
     return request({
         url: 'home/hot',
+        method: 'get',
+    })
+
+}
+
+// 获取产品列表数据
+export const getProductListAPI = () => {
+
+    return request({
+        url: '/home/goods',
         method: 'get',
     })
 

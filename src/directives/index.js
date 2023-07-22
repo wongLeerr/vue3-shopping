@@ -11,8 +11,8 @@ export const lazyPlugin = {
         mounted(el, binding) {
             // el: 绑定的真实 DOM
             // binding: binding.value属性表示xxx ( v-img-lazy="xxx" ) 
-            console.log(el)
-            console.log(binding)
+            // console.log(el)
+            // console.log(binding)
 
             // 是否进入视口区域
             const targetIsVisible = ref(false)

@@ -1,18 +1,18 @@
 <script setup>
-import { onMounted , ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { getBannerListAPI } from '../../../apis/modules/home'
 
 const bannerList = ref([])
 
-const getBannerList =async () => {
+const getBannerList = async () => {
   const res = await getBannerListAPI()
   if (res.code === '1') {
-      bannerList.value = res.result
+    bannerList.value = res.result
   }
 }
 
-onMounted( () => {
-    getBannerList()
+onMounted(() => {
+  getBannerList()
 })
 
 
