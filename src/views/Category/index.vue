@@ -9,6 +9,7 @@ const { categoryInfo } = useCategory()
 </script>
 
 <template>
+    <el-backtop :right="40" :bottom="80" :visibility-height="300" />
     <div class="top-category">
         <div class="container m-top-20">
             <!-- 面包屑 -->
@@ -29,7 +30,7 @@ const { categoryInfo } = useCategory()
                 <h3>全部分类</h3>
                 <ul>
                     <li v-for="i in categoryInfo.children" :key="i.id">
-                        <RouterLink to="/">
+                        <RouterLink :to="`/category/sub/${i.id}`">
                             <img :src="i.picture" />
                             <p>{{ i.name }}</p>
                         </RouterLink>
