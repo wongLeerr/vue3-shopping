@@ -39,7 +39,6 @@ const handleTabChange = () => {
 }
 
 const load = async () => {
-    console.log("加载数据")
     pagenationInfo.page += 1
     const data = {
         categoryId: filterData.value.id,

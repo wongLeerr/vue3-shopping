@@ -1,42 +1,39 @@
 <script setup>
-import { onMounted , ref ,reactive }  from 'vue'
+import { onMounted, ref, reactive } from 'vue'
 import { getNewGoodsAPI } from '@/apis/modules/home'
 import HomePanel from './HomePanel.vue'
 
 const newGoods = ref([])
 const titleInfo = reactive({
-    title: '新鲜好物',
-    subTitle:'新鲜出炉 品质靠谱'
+  title: '新鲜好物',
+  subTitle: '新鲜出炉 品质靠谱'
 })
 
-const getNewGoods =async () => {
-    const res = await getNewGoodsAPI()
-    if (res.code === '1') {
-        newGoods.value = res.result
-    }
+const getNewGoods = async () => {
+  const res = await getNewGoodsAPI()
+  if (res.code === '1') {
+    newGoods.value = res.result
+  }
 }
 
 onMounted(() => {
-    getNewGoods()
+  getNewGoods()
 })
 
 </script>
 
 <template>
-
-    <HomePanel :title="titleInfo.title" :subTitle="titleInfo.subTitle">
-        <ul class="goods-list">
-            <li v-for="item in newGoods" :key="item.id">
-            <RouterLink to="/">
-                <img :src="item.picture" alt="newGoods" />
-                <p class="name">{{ item.name }}</p>
-                <p class="price">&yen;{{ item.price }}</p>
-            </RouterLink>
-            </li>
-        </ul>
-    </HomePanel>
-  
- 
+  <HomePanel :title="titleInfo.title" :subTitle="titleInfo.subTitle">
+    <ul class="goods-list">
+      <li v-for="item in newGoods" :key="item.id">
+        <RouterLink :to="`/detail/${item.id}`">
+          <img :src="item.picture" alt="newGoods" />
+          <p class="name">{{ item.name }}</p>
+          <p class="price">&yen;{{ item.price }}</p>
+        </RouterLink>
+      </li>
+    </ul>
+  </HomePanel>
 </template>
 
 
