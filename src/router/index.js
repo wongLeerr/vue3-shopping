@@ -33,10 +33,8 @@ const router = createRouter({
           path: 'detail/:id',
           name: 'detail',
           component:Detail
-        }
+        },
       ]
-        
-      
     },
     {
       path: '/login',
