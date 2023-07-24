@@ -3,9 +3,16 @@ import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { getDetail } from '@/apis/modules/detail'
 import DetailHot from './components/DetailHot.vue'
+import { ElMessage } from 'element-plus'
+import { useCartStore } from '@/stores/cart'
 
 const loading = ref(true)
 const detailInfo = ref({})
+const count = ref(1)
+const cartStore = useCartStore()
+
+// 用于支持判断用户选择商品规格是否选全了
+const skuInfo = ref({})
 
 const { params: { id } } = useRoute()
 
@@ -17,6 +24,35 @@ const getDetailInfo = async () => {
 }
 
 const handleSkuChange = (selectedSku) => {
+    // console.log('selectedSku:', selectedSku)
+    // console.log('detailInfo:', detailInfo.value)
+    // 用户把商品规格选全了 selectedSku 为有很多信息的对象， 否则为一个空对象
+    skuInfo.value = selectedSku
+}
+
+const addGoodsToCart = () => {
+
+    // 未选择完整规格
+    if (!skuInfo.value.skuId) {
+        ElMessage.warning("请选择完整规格")
+        return
+    }
+
+    const params = {
+        id: detailInfo.value.id,
+        name: detailInfo.value.name,
+        picture: detailInfo.value.mainPictures[0],
+        count: count.value,
+        skuId: skuInfo.value.skuId,
+        attrsText: skuInfo.value.specsText,
+        selected: true
+    }
+
+    console.log("params", params)
+
+    cartStore.addCart(params)
+    ElMessage.success("添加购物车成功")
+
 }
 
 onMounted(() => {
@@ -97,10 +133,10 @@ onMounted(() => {
                             <!-- sku组件 -->
                             <Sku :goods="detailInfo" @change="handleSkuChange" />
                             <!-- 数据组件 -->
-
+                            <el-input-number v-model="count" :min="1" :max="999" />
                             <!-- 按钮组件 -->
                             <div>
-                                <el-button size="large" class="btn">
+                                <el-button size="large" class="btn" @click="addGoodsToCart">
                                     加入购物车
                                 </el-button>
                             </div>
