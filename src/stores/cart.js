@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { ref , computed } from 'vue'
 
 export const useCartStore = defineStore('cart', () => {
     
@@ -19,9 +19,48 @@ export const useCartStore = defineStore('cart', () => {
         cartList.value.push(goodObj)
     }
 
+    const delCart = (skuId) => {
+        cartList.value = cartList.value.filter(item => item.skuId !== skuId)
+        console.log("删除后的cartList为:",cartList)
+    }
+
+    const totalCount = computed(() => cartList.value.reduce((accumulator,curItem) => (accumulator + curItem.count),0))
+    
+    const totalMoney = computed(() => cartList.value.reduce((accumulator, curItem) => (accumulator + curItem.count * curItem.price), 0))
+    
+    // 切换单选框状态
+    const singleSelectChange = (skuId, state) => {
+        const findItem = cartList.value.find(item => item.skuId === skuId)
+        findItem.selected = state
+    }
+    
+    // 切换多选框状态
+    const multipleSelectChange = (state) => {
+        cartList.value.forEach((item) => {
+            item.selected = state
+        })
+    }
+
+    // 计算全选状态是否被勾选
+    const isAllSelected = computed(() => cartList.value.every((item) => item.selected))
+
+    // 打勾的几个项目
+    const selectedCartList = computed(() => cartList.value.filter(item => item.selected))
+    
+    // 打勾的几个项目总共要花多少钱
+    const selectedGoodMoney = computed(() =>(selectedCartList.value.reduce((accumulator, curItem) => (accumulator + curItem.count * curItem.price),0)))
+    
     return {
         cartList,
-        addCart
+        addCart,
+        delCart,
+        totalCount,
+        totalMoney,
+        singleSelectChange,
+        multipleSelectChange,
+        isAllSelected,
+        selectedCartList,
+        selectedGoodMoney
     }
 
 

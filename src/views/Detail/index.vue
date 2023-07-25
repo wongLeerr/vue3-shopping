@@ -24,7 +24,7 @@ const getDetailInfo = async () => {
 }
 
 const handleSkuChange = (selectedSku) => {
-    // console.log('selectedSku:', selectedSku)
+    console.log('selectedSku:', selectedSku)
     // console.log('detailInfo:', detailInfo.value)
     // 用户把商品规格选全了 selectedSku 为有很多信息的对象， 否则为一个空对象
     skuInfo.value = selectedSku
@@ -45,10 +45,11 @@ const addGoodsToCart = () => {
         count: count.value,
         skuId: skuInfo.value.skuId,
         attrsText: skuInfo.value.specsText,
-        selected: true
+        selected: true,
+        price: skuInfo.value.price
     }
 
-    console.log("params", params)
+    // console.log("params", params)
 
     cartStore.addCart(params)
     ElMessage.success("添加购物车成功")
