@@ -6,6 +6,8 @@ import Category from '@/views/Category/index.vue'
 import SubCategory from '@/views/SubCategory/index.vue'
 import Detail from '@/views/Detail/index.vue'
 import CartList from '@/views/CartList/index.vue'
+import Checkout from '@/views/Checkout/index.vue'
+import Pay from '@/views/Pay/index.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -40,6 +42,16 @@ const router = createRouter({
           name: 'cartlist',
           component:CartList
         },
+        {
+          path: 'checkout',
+          name: 'checkout',
+          component:Checkout
+        },
+        {
+          path: 'pay/:id',
+          name: 'pay',
+          component:Pay
+        }
       ]
     },
     {
@@ -54,6 +66,12 @@ const router = createRouter({
       top:0
     }
   }
+})
+
+// 导航守卫鉴权
+router.beforeEach((to, from, next) => {
+  // console.log(to, from, next)
+  next()
 })
 
 export default router

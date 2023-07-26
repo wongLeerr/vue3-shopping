@@ -102,7 +102,8 @@ export const useCartStore = defineStore('cart', () => {
         selectedCartList,
         selectedGoodMoney,
         clearLocalStorageCartList,
-        mergeCartList
+        mergeCartList,
+        getLatestCartList
     }
 
 // 开启持久化存储
