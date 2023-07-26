@@ -105,5 +105,5 @@ export const useCartStore = defineStore('cart', () => {
         mergeCartList
     }
 
-
+// 开启持久化存储
 },{persist:true})
