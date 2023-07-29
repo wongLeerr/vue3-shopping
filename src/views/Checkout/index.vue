@@ -16,10 +16,10 @@ const activeAddressId = ref('')
 const getOrderInfo = async () => {
     const res = await getOrderInfoAPI()
     checkInfo.value = res?.result
-    console.log("checkInfo:", checkInfo.value)
+    // console.log("checkInfo:", checkInfo.value)
     curAddress.value = checkInfo.value.userAddresses.find((item) => item.isDefault === 0)
     activeAddressId.value = curAddress.value.id
-    console.log("curAddress", curAddress.value)
+    // console.log("curAddress", curAddress.value)
 }
 
 const handleChoseAddress = (id) => {
@@ -43,7 +43,6 @@ const submit = async () => {
         addressId: curAddress.value.id
     }
     const res = await submitOrderToGetPayOrder(params)
-    console.log("submit响应res:", res)
     router.replace(`/pay/${res.result.id}`)
     cartStore.getLatestCartList()
 }

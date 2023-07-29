@@ -2,26 +2,30 @@
 import { getOrderAPI } from '@/apis/modules/pay'
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
-// import { useCountDown } from '@/composables/useCountDown'
-// const { formatTime, start } = useCountDown()
-// 获取订单数据
+import { useCountDown } from '@/composables/useCountDown'
+
+const { formatTime, start } = useCountDown()
+
 const route = useRoute()
 const payInfo = ref({})
 const getPayInfo = async () => {
     const res = await getOrderAPI(route.params.id)
     payInfo.value = res.result
-    // 初始化倒计时秒数
-    //   start(res.result.countdown)
+    start(res.result.countdown)
 }
+
 onMounted(() => getPayInfo())
 
-// 跳转支付
-// 携带订单id以及回调地址跳转到支付地址（get）
-// 支付地址
+
+// 进行支付交易的地址
 const baseURL = 'http://pcapi-xiaotuxian-front-devtest.itheima.net/'
+// 有了支付状态以后跳到哪
 const backURL = 'http://127.0.0.1:5173/paycallback'
+// 对回跳地址处理
 const redirectUrl = encodeURIComponent(backURL)
-const payUrl = `${baseURL}pay/aliPay?orderId=${route.query.id}&redirect=${redirectUrl}`
+// 此地址即为生成的终极地址，包含进行支付交易的地址以及携带的订单id，以及响应回跳地址
+const payUrl = `${baseURL}pay/aliPay?orderId=${route.params.id}&redirect=${redirectUrl}`
+
 </script>
 
 
