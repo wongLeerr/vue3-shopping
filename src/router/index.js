@@ -12,6 +12,7 @@ import PayBack from '@/views/Pay/PayBack.vue'
 import Member from '@/views/Member/index.vue'
 import MyOrder from '@/views/Member/components/MyOrder.vue'
 import MyInfo from '@/views/Member/components/MyInfo.vue'
+import { useUserStore } from '@/stores/user'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -92,8 +93,22 @@ const router = createRouter({
 
 // 导航守卫鉴权
 router.beforeEach((to, from, next) => {
-  // console.log(to, from, next)
-  next()
+  const userStore = useUserStore()
+  console.log('userInfo:',userStore.userInfo)
+  console.log('to:',to)
+  // 未登录
+  console.log(to.path.slice(0,1))
+
+  if (!userStore.userInfo.token) {
+    if (to.path === '/checkout' || to.path.slice(0, 4) === '/pay' || to.path.slice(0, 7) === '/member') {
+      next('/login')
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
+  
 })
 
 export default router

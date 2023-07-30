@@ -13,7 +13,9 @@ const app = createApp(App)
 
 const pinia = createPinia()
 pinia.use(piniaPluginPersistedstate)
+
 app.use(pinia)
+
 app.use(router)
 
 // 自定义懒加载插件
