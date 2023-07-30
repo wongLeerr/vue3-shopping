@@ -94,11 +94,7 @@ const router = createRouter({
 // 导航守卫鉴权
 router.beforeEach((to, from, next) => {
   const userStore = useUserStore()
-  console.log('userInfo:',userStore.userInfo)
-  console.log('to:',to)
   // 未登录
-  console.log(to.path.slice(0,1))
-
   if (!userStore.userInfo.token) {
     if (to.path === '/checkout' || to.path.slice(0, 4) === '/pay' || to.path.slice(0, 7) === '/member') {
       next('/login')

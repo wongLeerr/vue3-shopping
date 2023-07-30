@@ -18,13 +18,12 @@ const { params: { id } } = useRoute()
 
 const getDetailInfo = async () => {
     const res = await getDetail(id)
-    console.log(res)
     detailInfo.value = res.result
     loading.value = false
 }
 
 const handleSkuChange = (selectedSku) => {
-    console.log('selectedSku:', selectedSku)
+    // console.log('selectedSku:', selectedSku)
     // console.log('detailInfo:', detailInfo.value)
     // 用户把商品规格选全了 selectedSku 为有很多信息的对象， 否则为一个空对象
     skuInfo.value = selectedSku

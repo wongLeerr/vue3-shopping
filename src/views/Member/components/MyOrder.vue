@@ -36,7 +36,6 @@ const getUserOrderInfo = async () => {
     }
 
     const res = await getUserOrder(params)
-    console.log('c', res)
     paginationInfo.value.total = res.result.counts
     paginationInfo.value.pageSize = res.result.pageSize
     orderList.value = res.result.items
