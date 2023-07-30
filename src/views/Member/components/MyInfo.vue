@@ -6,10 +6,13 @@ import GoodItem from '@/views/Home/components/GoodItem.vue';
 
 const likeList = ref({})
 const userStore = useUserStore()
+const loading = ref(true)
 
 const getLikeList = async () => {
+
     const res = await getLikeListAPI({ limit: 4 })
     likeList.value = res.result
+    loading.value = false
 }
 
 onMounted(() => {
@@ -42,7 +45,7 @@ onMounted(() => {
             </a>
         </div>
     </div>
-    <div class="like-container">
+    <div class="like-container" v-loading="loading">
         <div class="home-panel">
             <div class="header">
                 <h4 data-v-bcb266e0="">猜你喜欢</h4>
